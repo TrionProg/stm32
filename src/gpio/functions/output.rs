@@ -52,7 +52,7 @@ pub trait OutputFun{
         Self::Pin::disable_output();
     }
 
-    fn enable_temporary(&self) -> TemporaryOutput<Self>{
+    fn enable_temporary(&self) -> TemporaryOutput<Self> where Self: Sized{
         TemporaryOutput::new(&self)
     }
 
@@ -88,12 +88,12 @@ macro_rules! create_function_output {
     )
 }
 
-pub struct TemporaryOutput<'a, Output:OutputFun>{
+pub struct TemporaryOutput<'a, Output:'a + OutputFun>{
     output:&'a Output,
 }
 
 impl<'a, Output:OutputFun> TemporaryOutput<'a, Output>{
-    pub fn new(output:&Output) -> Self{
+    pub fn new(output:&'a Output) -> Self{
         output.enable();
 
         TemporaryOutput{

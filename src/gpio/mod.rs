@@ -14,6 +14,8 @@ macro_rules! create_gpio{
         use memory_map::addresses::$gpio_name as GPIO_RB_ADDRESS;
         use memory_map::gpio::gpio_rb::$gpio_rb as GpioRB;
 
+        use ::stm32::gpio::Pin;
+
         static mut GPIO_COUNTER:u8=0;
 
         fn enable_gpio(){
