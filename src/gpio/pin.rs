@@ -1,5 +1,7 @@
+use ::gpio::GpioRBTrait;
+
 pub trait Pin{
-    type GpioRB:'static;
+    type GpioRB:GpioRBTrait + 'static;
 
     #[inline(always)]
     fn enable_pin();
@@ -8,13 +10,7 @@ pub trait Pin{
     fn disable_pin();
 
     #[inline(always)]
-    fn get_index() -> u8;
-
-    #[inline(always)]
-    fn get_gpio_rb() -> &'static Self::GpioRB;
-
-    #[inline(always)]
-    fn get_gpio_rb_mut() -> &'static mut Self::GpioRB;
+    fn get_index() -> u32;
 }
 
 #[macro_export]
@@ -33,16 +29,8 @@ macro_rules! create_pin {
                 disable_gpio();
             }
 
-            fn get_index() -> u8{
+            fn get_index() -> u32{
                 $index
-            }
-
-            fn get_gpio_rb() -> &'static Self::GpioRB{
-                unsafe { deref(GPIO_RB_ADDRESS) }
-            }
-
-            fn get_gpio_rb_mut() -> &'static mut Self::GpioRB{
-                unsafe { deref_mut(GPIO_RB_ADDRESS) }
             }
         }
     );

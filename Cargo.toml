@@ -4,3 +4,4 @@ version = "0.1.0"
 authors = ["trionprog <trionprog@gmail.com>"]
 
 [dependencies]
+volatile-register = "0.1.2"

@@ -1,42 +1,28 @@
 use ::gpio::pin::Pin;
+use ::gpio::GpioRBTrait;
 
 pub trait OutputPin:Pin{
     #[inline(always)]
-    fn enable_output();
+    fn enable_output(){
+        Self::enable_pin();
+        Self::GpioRB::set_moder(Self::get_index(),0b01);
+    }
 
     #[inline(always)]
-    fn disable_output();
+    fn disable_output(){
+        Self::disable_pin();
+        Self::GpioRB::set_moder(Self::get_index(),0b00);
+    }
 
     #[inline(always)]
-    fn turn_on();
+    fn turn_on(){
+        Self::GpioRB::set_bs(Self::get_index(),0b1);
+    }
 
     #[inline(always)]
-    fn turn_off();
-}
-
-#[macro_export]
-macro_rules! implement_output {
-    ($pin:ident,enable_output : $enable_output:block,disable_output : $disable_output:block,turn_on : $turn_on:block,turn_off : $turn_off:block) => (
-        impl OutputPin for $pin {
-            fn enable_output() {
-                Self::enable_pin();
-                $enable_output
-            }
-
-            fn disable_output() {
-                Self::disable_pin();
-                $disable_output
-            }
-
-            fn turn_on(){
-                $turn_on
-            }
-
-            fn turn_off(){
-                $turn_off
-            }
-        }
-    );
+    fn turn_off(){
+        Self::GpioRB::set_br(Self::get_index(),0b1);
+    }
 }
 
 pub trait OutputFun{
