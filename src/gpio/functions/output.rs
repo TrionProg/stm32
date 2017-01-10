@@ -25,7 +25,9 @@ pub trait OutputPin:Pin{
     }
 }
 
-pub trait OutputFun{
+pub trait OutputFun where
+    Self: ::core::marker::Sized
+{
     type Pin:OutputPin;
 
     #[inline(always)]

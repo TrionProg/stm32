@@ -21,7 +21,7 @@ impl RW32{
     }
 
     pub fn get_bits(&self, offset:u32, mask:u32) -> u32{
-        let mut bits = self.register.read();
+        let bits = self.register.read();
         bits >> offset & mask
     }
 }
@@ -36,7 +36,7 @@ impl RO32{
     }
 
     pub fn get_bits(&self, offset:u32, mask:u32) -> u32{
-        let mut bits = self.register.read();
+        let bits = self.register.read();
         bits >> offset & mask
     }
 }

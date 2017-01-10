@@ -6,6 +6,7 @@
 #![no_std]
 #![feature(const_fn)]
 #![feature(more_struct_aliases)]
+#![feature(alloc)]
 
 extern crate volatile_register;
 
@@ -14,3 +15,9 @@ pub mod rcc;
 
 #[macro_use]
 pub mod gpio;
+
+pub mod timer;
+
+extern crate alloc;
+
+pub use alloc::boxed::Box;
